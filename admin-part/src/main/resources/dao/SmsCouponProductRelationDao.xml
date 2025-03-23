@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pwc.dao.SmsCouponProductRelationDao">
+
+    <insert id="insertList">
+        insert into sms_coupon_product_relation (product_id,product_name,product_sn,coupon_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.productId}, #{item.productName}, #{item.productSn}, #{item.couponId})
+        </foreach>
+    </insert>
+</mapper>

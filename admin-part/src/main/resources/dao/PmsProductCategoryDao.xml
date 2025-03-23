@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pwc.dao.PmsProductCategoryDao">
+    <resultMap id="listWithChildrenMap" type="com.pwc.dto.PmsProductCategoryWithChildrenItem" extends="com.pwc.mapper.PmsProductCategoryMapper.BaseResultMap">
+        <collection property="children" resultMap="com.pwc.mapper.PmsProductCategoryMapper.BaseResultMap" columnPrefix="child_">
+        </collection>
+    </resultMap>
+    <select id="listWithChildren" resultMap="listWithChildrenMap">
+        select pc1.*, pc2.id child_id, pc2.name child_name
+        from pms_product_category pc1
+            left join pms_product_category pc2 on pc1.id = pc2.parent_id
+        where pc1.parent_id = 0
+    </select>
+</mapper>

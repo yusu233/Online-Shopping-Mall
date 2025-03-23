@@ -1,0 +1,48 @@
+server:
+  port: 8085
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:13306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 1317456
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #访问监控网页的登录用户名和密码
+        login-username: druid
+        login-password: druid
+  redis:
+    host: localhost 
+    database: 9
+    port: 6379 
+    password: 
+    timeout: 300ms 
+    
+  rabbitmq:
+    host: localhost
+    port: 5672
+    virtual-host: /mall
+    username: mall
+    password: mall
+
+logging:
+  level:
+    root: info
+    com.macro.mall: debug
+
+logstash:
+  host: localhost
+  enableInnerLog: false
+
+alipay:
+  gatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  appId: your appId
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxgyax5IYN2kLapYOs8nJnI4M/yuVcVa8mKfXHV5nsJpb/bO/olYKD6q7OHDkoYd73dMfGHYcqwazBp92Uo80d+W4Cgatr7Ld3tXjoGm99AxapuadvvR2NOlyLeo1xw+19ooEC2908iwhEwZEFvtqBB/n9NrSePCdmbiOiby7fCIUk47NeaeiLm1TyS3FIJhzNB11k5rxI7lskQ4ejnSvEkefovZC3Lh/d2AkEMi33BYjsbdgWe9qZOg1/BsJ/fx4eIa72ud9lH/Pxup1WMRF3wCa7kQAHZBZDm4RgFRCZhSPYgemn75Pqk63I+hPaC3Z6A/wN5aETwJTVQzTo34JwIDAQAB
+  appPrivateKey: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCjGDJrHkhg3aQtqlg6zycmcjgz/K5VxVryYp9cdXmewmlv9s7+iVgoPqrs4cOShh3vd0x8YdhyrBrMGn3ZSjzR35bgKBq2vst3e1eOgab30DFqm5p2+9HY06XIt6jXHD7X2igQLb3TyLCETBkQW+2oEH+f02tJ48J2ZuI6JvLt8IhSTjs15p6IubVPJLcUgmHM0HXWTmvEjuWyRDh6OdK8SR5+i9kLcuH93YCQQyLfcFiOxt2BZ72pk6DX8Gwn9/Hh4hrva532Uf8/G6nVYxEXfAJruRAAdkFkObhGAVEJmFI9iB6afvk+qTrcj6E9oLdnoD/A3loRPAlNVDNOjfgnAgMBAAECggEAMYhnx6Cq2sB13Gif4zyG52ZJK4DScbo+pN7PB4WmKlFhNGAA/c04uQBPaSIoA5g3/0J8OEp/MlSSzuo8zoF9d0Aw0mNbuaS4ptEPBnjZ/Ol+GKKphvl0AiZFc3BUFwC9FVFsWX2K6YdKFOQHuLAyvZhFKoVLUGWb6dnVW1P488pdN8yIAVeTybHacLK6WVKskBz4d81fJdROwq1/9dQ399s3MMYcOh4bUyQNajKMTdr9htlw4ta24ywyuSPpHRmdnh420Yg/NQOlP7Pc7zNiEpKduWmkgOU3mYJi3KiEeHRN4GBcFv7hBOrJeNontyAVZOzZsvNASvXrbHo/LZKwAQKBgQDadFS7q9dlfyZeR4q804A5o8P6QPyOcpcBrWewSZ4vx51n3+tTQG4y0YiDl3W85w+bzVGq2m9dueBA8zYUQnhaJbG5+icgpoV5Mzb5Vxxum0MyPEEnQBcGusQLsCu7BdWmjuMsjLef+1HD9TMvRALJmNXlEXmaz7LurOx6+cDb4QKBgQC/IBzlbn1A10pwGl1Vd/33JaIvlhFdEr89cmN+rkpg8scYa6Ba/HrxNwp8YIUVS9V6d+bmJaNCYarciD5uG8qRQZfTlctFX2bwMJy0+y9dQ5HqXx3NClSf7QkQnEXufa4Cq5SHJ8XOGghBw4HkK7qUBRbszAmKmOpcCUiztA6VBwKBgDnc3GDFWI1iy3fnfUEcyHb8ALn1oq/cfFEObEuOhF7lgbT047EufMHrLDymzqHVlhXPoZUevKbXyCWMBkQBgz1lhJjdQKXuVaZPwXzz7O0DJR5WRW+vEypOKAVsiXjFR90RNe0j7LNsbzD3brJTUmWxnN5K7anq39tGZHECXGohAoGAe1JOMuAjI6aG2mS4moBtN35p8wiCtap2CUD43/G3/mxIeQJhGrRU47XfJzfkR0SCP56ENzZL7HY2mEu09Lkr8KQBQj4iReXz9sF3K/PzsNr7mN28zeN/jR2WPsiG+wbPM9vgX4ETShRUBZMQCdkJb58FFs/kzDA08CPxbDqfOhsCgYBPlS5zWmiKBKb/8uuNdqS4Iamfp8ZFMebhIDhdfxa7HPmYpnsTbN05RxbVYZ9xNc6AuAh60PyyoPmrLGNA8kz1f2aQFLxGhAiZDVYKSROtYBWdYmq88H1xjnvn1cr9HcXe5DBaI3KnqU389TT/HPZ2TfDGpmmFc8YcF5Lbz4pKaw==
+  returnUrl: http://localhost:8060/#/pages/money/paySuccess
+  notifyUrl:
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pwc.dao.UmsRoleDao">
+    <select id="getMenuListByAdminId" resultType="com.pwc.model.UmsMenu">
+        select m.id, m.parent_id as parentId, m.create_time as createTime, m.title,
+            m.level, m.sort, m.name, m.icon, m.hidden
+        from ums_admin_role_relation ar
+            left join ums_role r on ar.role_id = r.id
+            left join ums_role_menu_relation rm on r.id = rm.role_id
+            left join ums_menu m on rm.menu_id = m.id
+        where ar.admin_id = #{adminId}
+            and m.id is not null
+        group by m.id
+    </select>
+
+    <select id="getMenuListByRoleId" resultType="com.pwc.model.UmsMenu">
+        select m.id, m.parent_id as parentId, m.create_time as createTime, m.title,
+            m.level, m.sort, m.name, m.icon, m.hidden
+        from ums_role_menu_relation rm
+            left join ums_menu m on rm.menu_id = m.id
+        where rm.role_id = #{roleId}
+            and m.id is not null
+        group by m.id
+    </select>
+    <select id="getResourceListByRoleId" resultType="com.pwc.model.UmsResource">
+        select re.id, re.create_time AS createTime, re.name,
+            re.url, re.description, re.category_id as categoryId
+        from ums_role_resource_relation rr
+            left join ums_resource re on rr.resource_id = re.id
+        where rr.role_id = #{roleId}
+            and re.id is not null
+        group by re.id
+    </select>
+</mapper>

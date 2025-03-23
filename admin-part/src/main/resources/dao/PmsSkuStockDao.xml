@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pwc.dao.PmsSkuStockDao">
+    <insert id="insertList">
+        INSERT INTO pms_sku_stock (product_id, sku_code, price, stock, low_stock, pic, sale, sp_data) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.productId}, #{item.skuCode}, #{item.price}, #{item.stock}, #{item.lowStock}, #{item.pic}, #{item.sale}, #{item.spData})
+        </foreach>
+    </insert>
+
+    <insert id="replaceList">
+        REPLACE INTO pms_sku_stock (id,product_id, sku_code, price, stock, low_stock,pic, sale, sp_data) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id}, #{item.productId}, #{item.skuCode}, #{item.price}, #{item.stock}, #{item.lowStock}, #{item.pic}, #{item.sale}, #{item.spData})
+        </foreach>
+    </insert>
+</mapper>

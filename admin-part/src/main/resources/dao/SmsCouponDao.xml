@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pwc.dao.SmsCouponDao">
+    <resultMap id="couponItemParam" type="com.pwc.dto.SmsCouponParam" extends="com.pwc.mapper.SmsCouponMapper.BaseResultMap">
+        <collection property="productRelationList" columnPrefix="cpr_" resultMap="com.pwc.mapper.SmsCouponProductRelationMapper.BaseResultMap">
+        </collection>
+        <collection property="productCategoryRelationList" columnPrefix="cpcr_" resultMap="com.pwc.mapper.SmsCouponProductCategoryRelationMapper.BaseResultMap">
+        </collection>
+    </resultMap>
+    <select id="getItem" resultMap="couponItemParam">
+        select
+            c.*,
+            cpr.id cpr_id,
+            cpr.product_id cpr_product_id,
+            cpr.product_name cpr_product_name,
+            cpr.product_sn cpr_product_sn,
+            cpcr.id cpcr_id,
+            cpcr.product_category_id cpcr_product_category_id,
+            cpcr.product_category_name cpcr_product_category_name,
+            cpcr.parent_category_name cpcr_parent_category_name
+        from sms_coupon c
+        left join sms_coupon_product_relation cpr on c.id = cpr.coupon_id
+        left join sms_coupon_product_category_relation cpcr on c.id = cpcr.coupon_id
+        where c.id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pwc.dao.OmsOrderReturnApplyDao">
+    <resultMap id="returnApplyDetailResultMap" type="com.pwc.dto.OmsOrderReturnApplyResult" extends="com.pwc.mapper.OmsOrderReturnApplyMapper.BaseResultMap">
+        <association property="companyAddress" resultMap="com.pwc.mapper.OmsCompanyAddressMapper.BaseResultMap" columnPrefix="ca_"/>
+    </resultMap>
+    <select id="getList" resultMap="com.pwc.mapper.OmsOrderReturnApplyMapper.BaseResultMap">
+        select *
+        from
+            oms_order_return_apply
+        where
+            1 = 1
+        <if test="queryParam.id!=null">
+            and id = #{queryParam.id}
+        </if>
+        <if test="queryParam.status!=null">
+            and status = #{queryParam.status}
+        </if>
+        <if test="queryParam.handleMan!=null and queryParam.handleMan!=''">
+            and handle_man = #{queryParam.handleMan}
+        </if>
+        <if test="queryParam.createTime!=null and queryParam.createTime!=''">
+            and create_time like CONCAT(#{queryParam.createTime}, '%')
+        </if>
+        <if test="queryParam.handleTime!=null and queryParam.handleTime!=''">
+            and handle_time like CONCAT(#{queryParam.handleTime}, '%')
+        </if>
+        <if test="queryParam.receiverKeyword!=null and queryParam.receiverKeyword!=''">
+            and (return_name like concat("%",#{queryParam.receiverKeyword},"%")
+                or return_phone like concat("%",#{queryParam.receiverKeyword},"%"))
+        </if>
+    </select>
+    <select id="getDetail" resultMap="returnApplyDetailResultMap">
+        select
+            ra.*, 
+            ca.id ca_id,
+            ca.address_name ca_address_name,
+            ca.`name` ca_name,
+            ca.phone ca_phone,
+            ca.province ca_province,
+            ca.city ca_city,
+            ca.region ca_region,
+            ca.detail_address ca_detail_address
+        from
+            oms_order_return_apply ra
+        left join oms_company_address ca on ra.company_address_id = ca.id
+        where ra.id=#{id};
+    </select>
+</mapper>
